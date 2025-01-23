@@ -6,20 +6,22 @@ import com.banking.service.UserService;
 import java.util.Scanner;
 
 public class Main {
-    //We are going to work on login facility.
-    //For that we are going to take the credentials as user input
-    private static Scanner input=new Scanner(System.in);
+                                                                                //We are going to work on login facility.
+                                                                                //For that we are going to take the credentials as user input
+    private static final Scanner input= new Scanner(System.in);
+    //static as we are going to use it many times in entire program
     static Main main=new Main();
     static UserService userService = new UserService();
     public static void main(String[] args) {
-        while(true) {
-
+        boolean keeprun=true;
+        while(keeprun) {
             System.out.println("Enter the username");
             String username = input.next();
             System.out.println("Enter the password");
             String password = input.next();
-            System.out.println("username: " + username + " password: " + password);
+            //System.out.println("username: " + username + " password: " + password);
             //Validating the credentials
+
             User user = userService.login(username, password);
 
             if (user != null && user.getRole().equals("admin")) {
@@ -27,11 +29,17 @@ public class Main {
                 main.initAdmin();
             } else if (user != null && user.getRole().equals("user")) {
                 System.out.println("Welcome " + username);
-                main.initCustomer();
+                main.initCustomer(user);
 
             } else {
                 System.out.println("Invalid username or password");
             }
+            System.out.println("Do you want to exit the program? [Y/N]");
+            String answer = input.next();
+            if(answer.equals("Y")) {
+                keeprun=false;
+            }
+
         }
     }
     private void initAdmin(){
@@ -70,7 +78,7 @@ public class Main {
         }
 
     }
-    private void initCustomer(){
+    private void initCustomer(User user){
 
         boolean flag=true;
         while(flag) {
@@ -83,11 +91,20 @@ public class Main {
                     flag = false;
                     break;
                 case 2:
-                    System.out.println("view balance successfully");;
+                    Double balance=main.checkBankBalance(user.getUsername());
+                    if(balance!=null){
+                        System.out.println("Your Balance is"+balance);
+                    }else{
+                        System.out.println("Your balance is empty");
+                    }
                     break;
+
                 default:
                     System.out.println("Invalid choice");
             }
         }
+    }
+    private Double checkBankBalance(String userId){
+        return userService.checkBankBalance(userId);
     }
 }
