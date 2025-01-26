@@ -49,9 +49,9 @@ public class UserRepository {
         return  users.add(user);
     }
     public  Double checkBankBalance(String userId){
-        List<User> result=users.stream().filter(user -> user.getUsername().equals(userId)).collect(Collectors.toList());
+        List<User> result=users.stream().filter(user -> user.getUsername().equals(userId)).toList();
         if(!result.isEmpty()){
-            return result.get(0).getAccountBalance();
+            return result.getFirst().getAccountBalance();
         }
         else{
             return null;
