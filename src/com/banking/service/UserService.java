@@ -17,4 +17,9 @@ public class UserService {
     public Double checkBankBalance(String userId){
         return userRepository.checkBankBalance(userId);
     }
+    public User getUser(String userId){
+        return userRepository.getUser(userId);
+
+
+    }
 }

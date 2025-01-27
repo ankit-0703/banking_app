@@ -84,6 +84,7 @@ public class Main {
         while(flag) {
             System.out.println("1. Log-out");
             System.out.println("2. view balance");
+            System.out.println("3. Fund transfer");
             int choice = input.nextInt();
             switch (choice) {
                 case 1:
@@ -98,7 +99,9 @@ public class Main {
                         System.out.println("Your balance is empty");
                     }
                     break;
-
+                case 3:
+                    main.FundTransfer();
+                    break;
                 default:
                     System.out.println("Invalid choice");
             }
@@ -106,5 +109,20 @@ public class Main {
     }
     private Double checkBankBalance(String userId){
         return userService.checkBankBalance(userId);
+    }
+    private void FundTransfer(){
+        System.out.println("Enter the payee account ID");
+        String payeeAccountId = input.next();
+        User user = getUser(payeeAccountId);
+        if(user!=null){
+            System.out.println("valid user");
+        }
+        else{
+            System.out.println("please enter valid user");
+        }
+
+    }
+    private User getUser(String userId){
+        return userService.getUser(userId);
     }
 }

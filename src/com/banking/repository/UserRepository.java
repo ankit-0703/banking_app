@@ -57,4 +57,11 @@ public class UserRepository {
             return null;
         }
     }
+    public User getUser(String userId){
+        List<User>result=users.stream().filter(user -> user.getUsername().equals(userId)).toList();
+        if(!result.isEmpty()){
+            return result.getFirst();
+        }
+        return null;
+    }
 }
