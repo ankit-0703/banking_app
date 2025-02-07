@@ -84,6 +84,7 @@ public class Main {
             System.out.println("1. Log-out");
             System.out.println("2. view balance");
             System.out.println("3. Fund transfer");
+            System.out.println("4. See all transaction");
 
             int choice = input.nextInt();
             switch (choice) {
@@ -103,10 +104,16 @@ public class Main {
                 case 3:
                     main.FundTransfer(user);
                     break;
+                case 4:
+                    main.printTransaction(user.getUsername());
+                    break;
                 default:
                     System.out.println("Invalid choice");
             }
         }
+    }
+    private void printTransaction(String userId){
+        userService.printTransaction(userId);
     }
     private Double checkBankBalance(String userId){
         return userService.checkBankBalance(userId);

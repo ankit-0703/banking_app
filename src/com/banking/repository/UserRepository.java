@@ -51,6 +51,7 @@ public class UserRepository {
         User user = new User(username, contact, password, "user", 500.0);
         return  users.add(user);
     }
+
     public  Double checkBankBalance(String userId){
         List<User> result=users.stream().filter(user -> user.getUsername().equals(userId)).toList();
         if(!result.isEmpty()){
@@ -67,12 +68,12 @@ public class UserRepository {
         }
         return null;
     }
-
     public boolean transferMoney(String UserId, String payeeUserId, Double amount){
             boolean isdebit=debit(UserId, amount,payeeUserId);
             boolean iscredit=credit(payeeUserId, amount,UserId);
             return isdebit && iscredit;
     }
+
     private boolean debit(String userId,Double amount,String payeeUserId){
         User user=getUser(userId);
         Double accountBalance=user.getAccountBalance();
@@ -93,7 +94,6 @@ public class UserRepository {
         return users.add(user);
 
     }
-
     private boolean credit(String payeeuserId,Double amount,String UserId){
         User user=getUser(payeeuserId);
         Double accountBalance=user.getAccountBalance();
@@ -113,4 +113,18 @@ public class UserRepository {
         transactions.add(transaction);
         return users.add(user);
     }
+
+    public void printTransaction(String userId){
+        List<Transaction> filteredtransaction = transactions.stream().filter(transaction -> transaction.getTransactionPerformedBy().equals(userId)).toList();
+        System.out.println("DATE \t\t User ID \t Amount \t Type \t Initial Balance \t Final balance \t By");
+        System.out.println("-------------------------------------------------------------------------------------------");
+        for(Transaction t:filteredtransaction){
+            System.out.println(t.getTransationDate()+"   \t"+
+                    t.getTranssactionUserId()+"\t"+t.getTranssactionAmount()+"\t\t"+
+                    t.getTransactionType()+"\t\t"+t.getInitialBalance()+"\t\t\t\t"+
+                    t.getFinalBalance()+"\t\t"+t.getTransactionPerformedBy());
+        }
+        System.out.println("-------------------------------------------------------------------------------------------");
+    }
+
 }
