@@ -47,6 +47,7 @@ public class Main {
         while(flag) {
             System.out.println("1. Log-out");
             System.out.println("2. Create new user");
+            System.out.println("3. see all transactions");
             int choice = input.nextInt();
             switch (choice) {
                 case 1:
@@ -56,6 +57,12 @@ public class Main {
                 case 2:
                     main.createUser();
                     break;
+                case 3:
+                    System.out.println("Enter the customer ID");
+                    String customerID = input.next();
+                    printTransaction(customerID);
+                    break;
+
                 default:
                     System.out.println("Invalid choice");
             }
