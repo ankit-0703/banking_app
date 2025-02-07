@@ -42,12 +42,13 @@ public class Main {
         }
     }
     private void initAdmin(){
-
+        String UserId="";
         boolean flag=true;
         while(flag) {
             System.out.println("1. Log-out");
             System.out.println("2. Create new user");
             System.out.println("3. see all transactions");
+            System.out.println("4. check balances");
             int choice = input.nextInt();
             switch (choice) {
                 case 1:
@@ -59,8 +60,15 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Enter the customer ID");
-                    String customerID = input.next();
-                    printTransaction(customerID);
+                    UserId = input.next();
+                    printTransaction(UserId);
+                    break;
+                case 4:
+                    System.out.println("Enter the customer ID");
+                    UserId = input.next();
+                    Double result=checkBankBalance(UserId);
+                    System.out.println("Bank balance for"+UserId+" = "+result);
+
                     break;
 
                 default:
