@@ -84,7 +84,7 @@ public class Main {
             System.out.println("1. Log-out");
             System.out.println("2. view balance");
             System.out.println("3. Fund transfer");
-            System.out.println("4. Transaction");
+
             int choice = input.nextInt();
             switch (choice) {
                 case 1:
