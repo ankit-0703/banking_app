@@ -130,4 +130,18 @@ public class UserRepository {
     public Map<String,Boolean> getAllChequeBookRequest(){
         return chequeBookRequest;
     }
+    public List<String> getUserIdForCheckBookRequest() {
+        List<String> userIds=new ArrayList<>();
+        for(Map.Entry<String,Boolean> entry: chequeBookRequest.entrySet()){
+            if(!entry.getValue()) {
+                userIds.add(entry.getKey());
+            }
+        }
+        return userIds;
+    }
+    public void approveCheckBookRequest(String userId) {
+        if(chequeBookRequest.containsKey(userId)) {
+           chequeBookRequest.put(userId,true);
+        }
+    }
 }

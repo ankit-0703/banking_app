@@ -3,6 +3,8 @@ package com.banking.main;
 import com.banking.entity.User;
 import com.banking.service.UserService;
 
+import java.sql.SQLOutput;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -50,6 +52,7 @@ public class Main {
             System.out.println("2. Create new user");
             System.out.println("3. see all transactions");
             System.out.println("4. check balances");
+            System.out.println("5. Approve CheckBook Request");
             int choice = input.nextInt();
             switch (choice) {
                 case 1:
@@ -71,11 +74,26 @@ public class Main {
                     System.out.println("Bank balance for"+UserId+" = "+result);
 
                     break;
+                case 5://first we will print all the user so that admin can choose and tell which one has to be approved
+                    List<String>userIds=main.getUserIdForCheckBookRequest();
+                    System.out.println("Select the user to approve");
+                    System.out.println(userIds);
+                    UserId=input.next();
+                    main.approveCheckBookRequest(UserId);
+                    System.out.println("Approved CheckBook Request");
+
+                    break;
 
                 default:
                     System.out.println("Invalid choice");
             }
         }
+    }
+    private void approveCheckBookRequest(String userId) {
+        userService.approveCheckBookRequest(userId);
+    }
+    private List<String> getUserIdForCheckBookRequest() {
+        return userService.getUserIdForCheckBookRequest();
     }
     private void createUser(){
         System.out.println("Enter the username");
@@ -131,8 +149,7 @@ public class Main {
                         System.out.println("You have already raised this request and it is already approved");
                     } else if (map.containsKey(userId)&& !map.get(userId)) {
                         System.out.println("You already raised this request and it is under process of approval");
-                    }
-                    else{
+                    }else{
                         raiseCheckBookRequest(user.getUsername());
                         System.out.println("Request raised successfully");
                     }
