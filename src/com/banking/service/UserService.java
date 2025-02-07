@@ -19,7 +19,8 @@ public class UserService {
     }
     public User getUser(String userId){
         return userRepository.getUser(userId);
-
-
+    }
+    public boolean transferMoney(String UserId, String payeeUserId, Double amount){
+        return userRepository.transferMoney(UserId,payeeUserId,amount);
     }
 }

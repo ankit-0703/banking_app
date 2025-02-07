@@ -16,9 +16,9 @@ public class UserRepository {
     // as we log in in we need one data already to operate that is here admin
     static {
         User user1 = new User("admin", "14242526", "admin", "admin", 550000.0);
-        User user2 = new User("user2", "142652526", "user2", "user", 100.0);
+        User user2 = new User("user2", "142652526", "user2", "user", 1000.0);
         User user3 = new User("user3", "1424255", "user3", "user", 6500.0);
-        User user4 = new User("user3", "1424755", "user4", "user", 6500.0);
+        User user4 = new User("user4", "1424755", "user4", "user", 6500.0);
 
         //the set is considering the user3 and user4 as completely different that is why it was printing the same value again and again.
         // in order to solve that we need to use the .equals to compare the parameters which helps to differentiate the two objects.
@@ -63,5 +63,30 @@ public class UserRepository {
             return result.getFirst();
         }
         return null;
+    }
+
+    public boolean transferMoney(String UserId, String payeeUserId, Double amount){
+            boolean isdebit=debit(UserId, amount);
+            boolean iscredit=credit(payeeUserId, amount);
+            return isdebit && iscredit;
+    }
+    private boolean debit(String userId,Double amount){
+        User user=getUser(userId);
+        Double accountBalance=user.getAccountBalance();
+        users.remove(user);
+        Double finalBalance=accountBalance-amount;
+        user.setAccountBalance(finalBalance);
+
+        return users.add(user);
+
+    }
+
+    private boolean credit(String userId,Double amount){
+        User user=getUser(userId);
+        Double accountBalance=user.getAccountBalance();
+        users.remove(user);
+        Double finalBalance=accountBalance+amount;
+        user.setAccountBalance(finalBalance);
+        return users.add(user);
     }
 }

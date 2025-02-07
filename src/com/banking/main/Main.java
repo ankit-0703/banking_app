@@ -6,8 +6,7 @@ import com.banking.service.UserService;
 import java.util.Scanner;
 
 public class Main {
-                                                                                //We are going to work on login facility.
-                                                                                //For that we are going to take the credentials as user input
+
     private static final Scanner input= new Scanner(System.in);
     //static as we are going to use it many times in entire program
     static Main main=new Main();
@@ -85,14 +84,16 @@ public class Main {
             System.out.println("1. Log-out");
             System.out.println("2. view balance");
             System.out.println("3. Fund transfer");
+            System.out.println("4. Transaction");
             int choice = input.nextInt();
             switch (choice) {
                 case 1:
-                    System.out.println("customer logged out successfully");
                     flag = false;
+                    System.out.println("customer logged out successfully");
+
                     break;
                 case 2:
-                    Double balance=main.checkBankBalance(user.getUsername());
+                Double balance=main.checkBankBalance(user.getUsername());
                     if(balance!=null){
                         System.out.println("Your Balance is"+balance);
                     }else{
@@ -100,7 +101,7 @@ public class Main {
                     }
                     break;
                 case 3:
-                    main.FundTransfer();
+                    main.FundTransfer(user);
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -110,12 +111,26 @@ public class Main {
     private Double checkBankBalance(String userId){
         return userService.checkBankBalance(userId);
     }
-    private void FundTransfer(){
+
+    private void FundTransfer(User userdetail){
         System.out.println("Enter the payee account ID");
         String payeeAccountId = input.next();
         User user = getUser(payeeAccountId);
         if(user!=null){
-            System.out.println("valid user");
+            System.out.println("Enter the amount to transfer");
+            Double amount = input.nextDouble();
+            //we will now check the given amount should be less than the persons current bank balance
+            Double userAccountBalance=checkBankBalance(userdetail.getUsername());
+            if(userAccountBalance>=amount){
+                boolean result = userService.transferMoney(userdetail.getUsername(), payeeAccountId, amount);
+                if(result){
+                    System.out.println("Transfer successful");
+                }else{
+                    System.out.println("Transfer failed");
+                }
+            }else{
+                System.out.println("Insufficient balance");
+            }
         }
         else{
             System.out.println("please enter valid user");
