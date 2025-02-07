@@ -33,6 +33,6 @@ public class UserService {
         userRepository.raiseCheckBookRequest(userId);
     }
     public Map<String,Boolean> getAllChequeBookRequest(){
-        return userRepository.getAllChequeBookRequest()
+        return userRepository.getAllChequeBookRequest();
     }
 }
