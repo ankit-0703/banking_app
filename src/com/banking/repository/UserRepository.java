@@ -4,10 +4,7 @@ import com.banking.entity.Transaction;
 import com.banking.entity.User;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserRepository {
@@ -15,6 +12,7 @@ public class UserRepository {
     //We don't want to use the duplicate value for authenticity.
     private static final Set<User> users = new HashSet<>();      //this is going to be a set which is going to store all the user data. It is going to be common that is why we need only one copy of this for efficiency soo we are making it static.
     private static final List<Transaction> transactions = new ArrayList<>();
+    Map<String,Boolean> chequeBookRequest=new HashMap<>();
     // to initialize these users static member, we need a static block.
     // as we log in in we need one data already to operate that is here admin
     static {
@@ -126,5 +124,10 @@ public class UserRepository {
         }
         System.out.println("-------------------------------------------------------------------------------------------");
     }
-
+    public void raiseCheckBookRequest(String userId){
+        chequeBookRequest.put(userId,false);
+    }
+    public Map<String,Boolean> getAllChequeBookRequest(){
+        return chequeBookRequest;
+    }
 }

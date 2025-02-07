@@ -3,6 +3,8 @@ package com.banking.service;
 import com.banking.entity.User;
 import com.banking.repository.UserRepository;
 
+import java.util.Map;
+
 public class UserService {
     private final UserRepository userRepository = new UserRepository();
     public void printUsers(){
@@ -26,5 +28,11 @@ public class UserService {
 
     public void printTransaction(String userId){
         userRepository.printTransaction(userId);
+    }
+    public void raiseCheckBookRequest(String userId){
+        userRepository.raiseCheckBookRequest(userId);
+    }
+    public Map<String,Boolean> getAllChequeBookRequest(){
+        return userRepository.getAllChequeBookRequest()
     }
 }
